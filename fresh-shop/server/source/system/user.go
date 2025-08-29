@@ -53,7 +53,7 @@ func (i *initUser) InitializeData(ctx context.Context) (next context.Context, er
 			Username:    "admin",
 			Password:    adminPassword,
 			NickName:    "dalefeng",
-			HeaderImg:   "https://minio.kl.do/picture/images/avatar/face.png",
+			HeaderImg:   "https://fs.ssooai.com/picture/images/avatar/face.png",
 			AuthorityId: 888,
 			Phone:       "18166669999",
 			Email:       "dalefeng@gmail.com",

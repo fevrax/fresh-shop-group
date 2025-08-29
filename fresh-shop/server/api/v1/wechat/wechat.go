@@ -30,8 +30,8 @@ func (w *WeChatApi) Code2Session(c *gin.Context) {
 	}
 	result, err := wechatService.Code2SessionKey(data)
 	if err != nil {
-		global.Log.Error("失败!", zap.Error(err))
-		response.FailWithMessage("失败", c)
+		global.Log.Error("Code2SessionKey 失败!，请检查appid等配置是否正确", zap.Error(err))
+		response.FailWithMessage("appid 配置错误", c)
 	} else {
 		response.OkWithData(result, c)
 	}
