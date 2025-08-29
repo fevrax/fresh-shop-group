@@ -1,160 +1,99 @@
-# 启运冻品商城
-预览：微信小程序搜索启运冻品“启运冻品”
 
-# 运行环境
-Golang：>= 1.18
+# Fresh Shop
 
-Node.js：= v16.19.1 
+[![Go](https://img.shields.io/badge/Go-1.18+-blue.svg)](https://golang.org/)
+[![Vue](https://img.shields.io/badge/Vue.js-3.x-green.svg)](https://vuejs.org/)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 
-Mysql: >= 5.7
+**Fresh Shop** 是一款功能强大的现代化电商系统，基于 Go (Gin) 和 Vue 3 构建。它提供了一整套从后台管理到小程序商城的完整解决方案。
 
-服务器：CentOS7
+## ✨ 功能特性
 
-# 运行环境安装
+*   **后台管理系统**:
+    *   **仪表盘**: 核心数据可视化。
+    *   **权限管理**: 基于 Casbin 的灵活角色权限控制。
+    *   **商品管理**: 商品分类、规格、详情等。
+    *   **订单管理**: 订单列表、详情、发货等。
+    *   **用户管理**: 用户列表、信息、等级等。
+    *   **系统设置**: 站点信息、支付方式、物流配置。
+*   **微信小程序商城**:
+    *   用户登录注册。
+    *   商品浏览、搜索、收藏。
+    *   购物车功能。
+    *   在线下单与支付。
+    *   订单查询与管理。
 
-## 微信小程序开发工具
-Windows 系统中下载 微信小程序开发工具
-下载地址：https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html
+## 🚀 快速启动
 
-## HBuilder X
-Windows 系统中下载 HBuilder X
-下载地址：https://www.dcloud.io/hbuilderx.html
+### 环境准备
 
-## Golang 1.18 安装
-1. 下载安装包
-```shell
-wget https://golang.google.cn/dl/go1.18.10.linux-amd64.tar.gz
-```
+*   Go >= 1.18
+*   Node.js >= 16.0
+*   MySQL >= 5.7
+*   Redis
 
-2. 安装
-```shell
-tar -zxf go1.18.10.linux-amd64.tar.gz -C /usr/local
-```
+### 后端 (`fresh-shop/server`)
 
-3. 添加到环境变量
-```shell
-vim /etc/profile
-```
-将一下内容放入 /etc/profile 的末尾
-```shell
-# golang 环境变量
-export GO111MODULE=on
-export GOROOT=/usr/local/go
-export GOPATH=/home/gopath
-export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
-``
-4. 应用环境变量
-```shell
-go env -w GOPROXY=https://goproxy.cn,direct
-source /etc/profile
-```
+1.  **克隆项目**
+    ```bash
+    git clone https://github.com/fevrax/fresh-shop-group.git
+    cd fresh-shop-group
+    ```
 
-5. 验证
-```shell
-[root@QYDP-CENTOS ~]# go version
-go version go1.18.10 linux/amd64
-```
+2.  **配置**
+    *   进入 `fresh-shop/server` 目录，复制 `config.yaml.example` 为 `config.yaml`。
+    *   修改 `config.yaml` 中的Mysql数据库、Redis 等配置。
 
-## 安装 Node.js
-1. yum 安装设置 Node.js v16 版本
-```shell
-curl --silent --location https://rpm.nodesource.com/setup_16.x | sudo bash
-```
-yum 方式安装
-```shell
-sudo yum -y install nodejs
-```
+3.  **初始化数据库**
+    *   导入 `sql/fresh-shop.sql` 到你的 MySQL 数据库。
 
-验证
-```shell
-[root@QYDP-CENTOS ~]# node --version
-v16.20.1
-```
+4.  **安装依赖并运行**
+    ```bash
+    cd fresh-shop/server
+    go mod tidy
+    go run main.go
+    ```
+    服务将启动在 `http://localhost:48888`。
 
-2. 安装 yarn
-```shell
-npm install --global yarn
-```
-验证
-```shell
-[root@QYDP-CENTOS ~]# yarn -version
-1.22.19
-```
+### 前端后台管理 (`fresh-shop/web`)
 
-# 项目部署
-1. 使用 FTP 或宝塔 将 `fresh-shop-group.zip` 上传至服务器 `/www/wwwroot/qiyundongpin.cn` 目录下
-2. 解压 `fresh-shop-group.zip`
-```shell
-cd /www/wwwroot/qiyundongpin.cn
-unzip fresh-shop-group.zip
-```
-**配置文件路径：** `fresh-shop-group\fresh-shop\server\config.yaml
+> 本项目前端使用 `pnpm` 作为包管理器。请先安装 `pnpm`：
+> ```bash
+> npm install -g pnpm
+> ```
 
-**配置文件路径：** `fresh-shop-group\fresh-shop\server\config.yaml
+1.  **安装依赖**
+    ```bash
+    cd fresh-shop/web
+    pnpm install
+    ```
 
-**配置文件路径：** `fresh-shop-group\fresh-shop\server\config.yaml
+2.  **运行**
+    ```bash
+    pnpm serve
+    ```
+    访问 `http://localhost:8080`。
+
+### 微信小程序 (`fresh-shop-uniapp`)
+
+1.  **导入项目**
+    *   使用 HBuilder X 导入 `fresh-shop-uniapp` 项目。
+
+2.  **配置**
+    *   修改 `config/config.js` 中的 API 地址为你的后端服务地址。
+
+3.  **运行到小程序模拟器**
+    *   在 HBuilder X 中，点击“运行” -> “运行到小程序模拟器” -> “微信开发者工具”。
 
 
+## 🤝 贡献
 
-## 数据库配置
-1. 使用宝塔工具导入`fresh-shop` 数据库
-数据库文件目录: fresh-shop-group/sql/fresh-shop.sql 
-2. 导入成功后修改数据库配置文件的 `mysql` 字段（大概在109行）  
+欢迎提交 PRs 和 Issues！
 
-## 后端服务构建
-**请确保配置文件已经修改完毕**
-**构建时间较长请耐心等待**
-```shell
-cd /www/wwwroot/qiyundongpin.cn/fresh-shop-group/fresh-shop/server
-go mod tidy
-go build ./
-```
-验证
-```shell
-[root@QYDP-CENTOS server]# ls | grep server
-server
-```
+## 📄 开源许可
 
-## 后台管理系统构建
-1. 构建
-**构建时间较长请耐心等待**
-```shell
-cd /www/wwwroot/qiyundongpin.cn/fresh-shop-group/fresh-shop/web
-yarn install 
-yarn build
-```
-验证
-```shell
-[root@QYDP-CENTOS server]# ls | grep dist
-server
-```
+本项目基于 [MIT](/LICENSE) 许可。
 
-2. 部署
-宝塔面板 -> 网站 -> Go项目 -> 添加项目
-项目名称：启运冻品Server
-项目执行文件：/www/wwwroot/qiyundongpin.cn/fresh-shop-group/fresh-shop/server/server
-项目端口：48888
 
-## 小程序构建
 
-### 微信小程序开发工具
-Windows 系统重打开 微信小程序开发工具并登录，
-点击右上角的设置 -> 安全 -> 将服务端口打开
-
-### HBuilder X
-1. Windows 系统打开 HBuilder X
-点击 文件 -> 导入 -> 从目录中导入 -> fresh-shop-group/fresh-shop/fresh-shop-uniapp
-
-2. 发行
-然后点击 发行 -> 小程序 - 微信 -> 填写相关信息 -> 发行
-小程序名称：启运冻品
-小程序Appid：wxdd9fa969ce0103ce
-其他选项不需要勾选，如果提示需要登录则注册一个账号
-
-3. 发布
-发行成功后会自动打开微信小程序开发者工具
-点击上传输入版本号 1 确认即可
-
-4. 提交审核
-https://mp.weixin.qq.com/wxamp/wacodepage/getcodepage?token=599980036&lang=zh_CN
-打开微信小程序后台，找到版本管理，提交审核即可
+![Star History](https://api.star-history.com/svg?repos=fevrax/fresh-shop-group&type=Date)

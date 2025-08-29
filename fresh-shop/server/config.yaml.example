@@ -70,7 +70,7 @@ db-list:
     port: 3306
     config: "charset=utf8mb4&parseTime=True&loc=Asia%2FShanghai"
     db-name: "fresh-shop"
-    username: ""
+    username: "root"
     password: ""
     prefix: ""
     singular: false
@@ -122,7 +122,7 @@ mysql:
   port: 3306
   config: charset=utf8mb4&parseTime=True&loc=Asia%2FShanghai
   db-name: fresh-shop
-  username:
+  username: root
   password:
   prefix: ""
   singular: false
