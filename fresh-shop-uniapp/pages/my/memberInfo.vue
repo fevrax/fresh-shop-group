@@ -90,6 +90,7 @@
 				user: null,
 				role: {},
 				auditStatus: 0,
+				timer: null, // 定时器
 				formData: {
 					AuthorityIds: [1000]
 				},
@@ -140,15 +141,50 @@
 							this.formData.originCustomerName = this.user.originCustomerName
 						}
 						setUser(this.user)
+						if ([2, 3].includes(this.auditStatus)) {
+							this.startPolling()
+						}
 					})
 				}
 				// 去除末尾客户
 				this.customerTypeValue = this.role.authorityName.replace("客户", "")
 			}
-
-
+		},
+		onUnload() {
+			this.stopPolling()
 		},
 		methods: {
+			startPolling() {
+				this.timer = setInterval(() => {
+					getUserAuditStatus().then(res => {
+						const newStatus = res.data.auditStatus;
+						if (newStatus !== this.auditStatus) {
+							this.auditStatus = newStatus
+							this.user.auditStatus = newStatus
+							this.user.auditRemark = res.data.auditRemark
+							this.user.applyTime = res.data.applyTime
+							setUser(this.user)
+							if (newStatus === 1) {
+								this.stopPolling()
+								this.$message(this.$refs.toast).success("审核通过！即将跳转到首页")
+								setTimeout(() => {
+									uni.redirectTo({
+										url: '/pages/index/index'
+									})
+								}, 1000)
+							} else if (newStatus !== 2 && newStatus !== 3) {
+								this.stopPolling()
+							}
+						}
+					})
+				}, 1000)
+			},
+			stopPolling() {
+				if (this.timer) {
+					clearInterval(this.timer)
+					this.timer = null
+				}
+			},
 			customerTypeChange(id) {
 				this.formData.AuthorityIds = [id]
 			},
@@ -188,6 +224,9 @@
 				this.role.authorityId = this.formData.AuthorityIds[0]
 				setRole(this.role)
 				this.$message(this.$refs.toast).success("提交成功，请耐心等待审核！")
+				if ([2, 3].includes(this.auditStatus)) {
+					this.startPolling()
+				}
 			},
 			// 获取当前时间
 			getNowFormatDate() {

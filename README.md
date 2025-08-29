@@ -1,11 +1,11 @@
 
-# Fresh Shop
+# 启运冻品
 
 [![Go](https://img.shields.io/badge/Go-1.18+-blue.svg)](https://golang.org/)
 [![Vue](https://img.shields.io/badge/Vue.js-3.x-green.svg)](https://vuejs.org/)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 
-**Fresh Shop** 是一款功能强大的现代化电商系统，基于 Go (Gin) 和 Vue 3 构建。它提供了一整套从后台管理到小程序商城的完整解决方案。
+**启运冻品** 是一款功能强大的现代化电商系统，基于 Go (Gin) 和 Vue 3 构建。它提供了一整套从后台管理到小程序商城的完整解决方案。
 
 ## ✨ 功能特性
 

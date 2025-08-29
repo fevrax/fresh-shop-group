@@ -64,7 +64,7 @@
                         </view>
                         <view style="width: 100%; text-align: center;">{{ row.name }}</view>
                     </view>
-					
+
 					<view class="label" hover-class="hover"
 						  @tap="getUnlimitedQRCode()">
 						<view class="icon">
@@ -205,7 +205,7 @@ export default {
 	            this.point = res.data.point
                 setUser(this.user)
 				setRole(this.role)
-				
+
 				// 先获取上月未结，在获取本月
 				const date = new Date()
 				date.setMonth(date.getMonth() - 1)
@@ -220,8 +220,8 @@ export default {
 					this.orderStatusCount = orderStatusRes.data
 					setSettlmentInfo({})
 				}
-				
-				
+
+
                 console.log('this.orderStatusCount', this.orderStatusCount)
             }
         },
@@ -348,7 +348,7 @@ export default {
 				}
 				console.log(resp);
 			} catch (e) {
-				
+
 			}
 			// 拼接成 data URL
 			const imageUrl = 'data:image/png;base64,' + base64;
@@ -360,11 +360,11 @@ export default {
 		    const binaryString = atob(base64String);
 		    const binaryLength = binaryString.length;
 		    const bytes = new Uint8Array(binaryLength);
-		
+
 		    for (let i = 0; i < binaryLength; i++) {
 		        bytes[i] = binaryString.charCodeAt(i);
 		    }
-		
+
 		    const decoder = new TextDecoder();
 		    return decoder.decode(bytes);
 		},
