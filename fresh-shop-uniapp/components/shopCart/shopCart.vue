@@ -105,22 +105,19 @@
                         <text class="select-text">全选</text>
                     </view>
 
-                    <!-- 右侧区域：价格信息和结算按钮 -->
-                    <view class="right-section">
-                        <!-- 价格信息 -->
-                        <view class="price-info">
-                            <view class="price-label">合计:</view>
-                            <view class="total-price">
-                                <text class="price-currency">¥</text>
-                                <text class="price-amount">{{ total }}</text>
-                            </view>
+                    <!-- 价格信息 -->
+                    <view class="price-info">
+                        <view class="price-label">合计:</view>
+                        <view class="total-price">
+                            <text class="price-currency">¥</text>
+                            <text class="price-amount">{{ total }}</text>
                         </view>
+                    </view>
 
-                        <!-- 结算按钮 -->
-                        <view class="checkout-button" @tap="accounts">
-                            <text class="button-text">结算</text>
-                            <text class="button-count" v-if="selectedCount > 0">({{ selectedCount }})</text>
-                        </view>
+                    <!-- 结算按钮 -->
+                    <view class="checkout-button" @tap="accounts">
+                        <text class="button-text">结算</text>
+                        <text class="button-count" v-if="selectedCount > 0">({{ selectedCount }})</text>
                     </view>
                 </view>
             </view>
@@ -248,18 +245,18 @@ export default {
             // 保存删除的商品信息用于失败时恢复
             const deletedItem = this.list[this.currentDeleteIndex]
             const deletedIndex = this.currentDeleteIndex
-            
+
             // 立即从UI中删除商品
             this.$emit('deleteCart', deletedIndex)
             this.hideDeleteCartDalog()
-            
+
             // 异步请求接口
             let ids = []
             ids.push(deletedItem.ID)
             let data = {
                 ids: ids
             }
-            
+
             try {
                 const res = await deleteCartByIds(data, this.$refs.toast)
                 if (res.code !== 0) {
@@ -281,12 +278,12 @@ export default {
         async checkedGoods(id, checked, index) {
             // 先保存原始状态用于失败时回滚
             const originalChecked = checked
-            
+
             // 立即更新UI状态
             const newChecked = checked === 1 ? 0 : 1
             this.list[index].checked = newChecked
             this.$emit('update', this.list)
-            
+
             // 更新全选状态和统计
             let checkedAll = true
             this.list.forEach(item => {
@@ -296,20 +293,20 @@ export default {
             })
             this.isCheckAll = checkedAll
             this.statistics()
-            
+
             // 异步请求接口
             const data = {
                 ID: id,
                 checked: newChecked
             }
-            
+
             try {
                 const res = await updateCart(data, this.$refs.toast)
                 if (res.code !== 0) {
                     // 接口失败，回滚状态
                     this.list[index].checked = originalChecked
                     this.$emit('update', this.list)
-                    
+
                     // 重新计算全选状态和统计
                     let checkedAll = true
                     this.list.forEach(item => {
@@ -319,14 +316,14 @@ export default {
                     })
                     this.isCheckAll = checkedAll
                     this.statistics()
-                    
+
                     this.$message(this.$refs.toast).error('操作失败，请重试')
                 }
             } catch (error) {
                 // 请求异常，回滚状态
                 this.list[index].checked = originalChecked
                 this.$emit('update', this.list)
-                
+
                 // 重新计算全选状态和统计
                 let checkedAll = true
                 this.list.forEach(item => {
@@ -336,7 +333,7 @@ export default {
                 })
                 this.isCheckAll = checkedAll
                 this.statistics()
-                
+
                 this.$message(this.$refs.toast).error('网络异常，请重试')
             }
         },
@@ -352,22 +349,22 @@ export default {
                 this.$message(this.$refs.toast).error("商品数量不能小于 1")
                 return
             }
-            
+
             // 保存原始状态用于失败时回滚
             const originalNum = this.list[index].num
-            
+
             // 立即更新UI状态
             this.list[index].num = num
             this.$emit('update', this.list)
             this.statistics()
-            
+
             // 异步请求接口
             const data = {
                 goodsId: id,
                 specType: 0, // 单规格
                 num: num
             }
-            
+
             try {
                 const res = await addCart(data)
                 if (res.code !== 0) {
@@ -392,7 +389,7 @@ export default {
             // 保存原始状态用于失败时回滚
             const originalList = JSON.parse(JSON.stringify(this.list))
             const originalIsCheckAll = this.isCheckAll
-            
+
             if (this.isCheckAll) {
                 // 取消全选 - 先更新UI
                 this.list.forEach(item => {
@@ -401,7 +398,7 @@ export default {
                 this.isCheckAll = false
                 this.$emit('update', this.list)
                 this.statistics()
-                
+
                 // 异步请求接口
                 try {
                     const res = await clearSelectAllCart(this.$refs.toast)
@@ -431,7 +428,7 @@ export default {
                 this.isCheckAll = true
                 this.$emit('update', this.list)
                 this.statistics()
-                
+
                 // 异步请求接口
                 try {
                     const res = await selectAllCart(this.$refs.toast)
@@ -846,62 +843,56 @@ export default {
             }
         }
 
-        .right-section {
+        .price-info {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 4px;
 
-            .price-info {
-                display: flex;
-                align-items: center;
-                gap: 4px;
-
-                .price-label {
-                    font-size: 14px;
-                    color: #7f8c8d;
-                }
-
-                .total-price {
-                    display: flex;
-                    align-items: baseline;
-
-                    .price-currency {
-                        font-size: 12px;
-                        color: #ff4757;
-                        font-weight: 500;
-                    }
-
-                    .price-amount {
-                        font-size: 18px;
-                        color: #ff4757;
-                        font-weight: 600;
-                    }
-                }
+            .price-label {
+                font-size: 14px;
+                color: #7f8c8d;
             }
 
-            .checkout-button {
-                background: #3c9cff;
-                border-radius: 16px;
-                padding: 8px 20px;
+            .total-price {
                 display: flex;
-                align-items: center;
-                gap: 4px;
-                transition: all 0.2s ease;
+                align-items: baseline;
 
-                &:active {
-                    transform: scale(0.95);
+                .price-currency {
+                    font-size: 12px;
+                    color: #ff4757;
+                    font-weight: 500;
                 }
 
-                .button-text {
-                    font-size: 14px;
+                .price-amount {
+                    font-size: 18px;
+                    color: #ff4757;
                     font-weight: 600;
-                    color: #ffffff;
                 }
+            }
+        }
 
-                .button-count {
-                    font-size: 11px;
-                    color: rgba(255, 255, 255, 0.8);
-                }
+        .checkout-button {
+            background: #3c9cff;
+            border-radius: 16px;
+            padding: 8px 20px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s ease;
+
+            &:active {
+                transform: scale(0.95);
+            }
+
+            .button-text {
+                font-size: 14px;
+                font-weight: 600;
+                color: #ffffff;
+            }
+
+            .button-count {
+                font-size: 11px;
+                color: rgba(255, 255, 255, 0.8);
             }
         }
     }
