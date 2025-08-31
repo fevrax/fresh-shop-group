@@ -22,6 +22,21 @@
     *   购物车功能。
     *   在线下单与支付。
     *   订单查询与管理。
+ 
+## 预览
+
+### 微信小程序
+<p align="center">
+  <img width="30%" alt="首页" src="https://github.com/user-attachments/assets/ae053b2f-8d83-4fd4-9c54-ef6898403155" />
+  <img width="30%" alt="商品页" src="https://github.com/user-attachments/assets/ea13bbf2-8d69-4d28-a43e-dee16017b268" />
+  <img width="30%" alt="个人中心" src="https://github.com/user-attachments/assets/bc400aa3-7a91-4eb8-aa03-5d95055f6739" />
+</p>
+
+### 管理端
+<p align="center">
+  <img width="49%" alt="仪表盘" src="https://github.com/user-attachments/assets/b937d5c2-3dcb-4ccd-b227-bfba6e1338e6" />
+  <img width="49%" alt="商品管理" src="https://github.com/user-attachments/assets/aae7e172-a6ec-4ebf-8b90-188becb061b9" />
+</p>
 
 ## 🚀 快速启动
 
